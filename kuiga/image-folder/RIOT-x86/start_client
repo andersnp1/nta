@@ -1,0 +1,42 @@
+#!/bin/bash
+
+DEBUG=0
+
+RADIO_DEV=$(netstat -ie | grep -B1 $RADIO_PREFIX | head -n1 | awk '{print $1}')
+CONTROL_DEV=$(netstat -ie | grep -B1 $CONTROL_PREFIX | head -n1 | awk '{print $1}')
+
+RADIO_GW="$RADIO_PREFIX.0.1"
+export RADIO_GW
+
+# rename interfaces
+ifconfig $RADIO_DEV down
+ip link set $RADIO_DEV name radio
+ifconfig radio up
+
+ifconfig $CONTROL_DEV down
+ip link set $CONTROL_DEV name control
+ifconfig control up
+
+route add default gw $RADIO_GW radio > log
+CONTAINER_ID=$(grep name /proc/self/cgroup | awk -F "/" '{print $3}')
+export CONTAINER_ID
+PORT=5556
+export PORT
+
+export RADIO_DEV=radio
+export CONTROL_DEV=control
+
+if [[ $DEBUG = 1 ]]; then
+    while :
+    do
+        sleep 1
+        epoch=$(echo $(($(date +%s%N)/1000000)))
+        echo "Sending $epoch"
+	    sendip -d $epoch google.com
+    done
+else
+    #echo -e $(ifconfig)
+    #echo $RADIO_DEV
+    #echo $CONTROL_DEV
+    ./client.elf
+fi

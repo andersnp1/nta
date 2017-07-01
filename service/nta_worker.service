@@ -1,0 +1,12 @@
+[Unit]
+Description=Kuiga Box Worker
+After=nta_web.service
+Requires=nta_web.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kuiga-worker
+ExecStart=/usr/bin/java -Xms1m -Xmx128m -Xss2m -XX:+UseSerialGC -jar kuiga-worker.jar
+
+[Install]
+WantedBy=multi-user.target

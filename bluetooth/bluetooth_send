@@ -1,0 +1,4 @@
+#!/bin/bash
+
+hostname -I >> /dev/rfcomm0
+echo "hi" > /dev/rfcomm0

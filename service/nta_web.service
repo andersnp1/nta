@@ -1,0 +1,13 @@
+[Unit]
+Description=Kuiga Box Web
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kuiga-web
+PIDFile=/opt/kuiga-web/RUNNING.pid
+Environment="JVM_OPTS=-Xms1m -Xmx128m -Xss2m -XX:+UseSerialGC"
+ExecStart=/bin/bash -c "./bin/kuiga-web"
+
+[Install]
+WantedBy=multi-user.target
+

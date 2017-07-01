@@ -1,0 +1,3 @@
+[submodule "ess8_web"]
+	path = ess8_web
+url=https://github.com/andersnp1/ess8_web.git

@@ -1,0 +1,9 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "files.eol": "\n",
+    "files.associations": {
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "thread": "cpp"
+    }
+}
